@@ -1,0 +1,342 @@
+local AccountId = 570;
+
+function GetLink()
+    return string.format("https://gateway.platoboost.com/a/%i?id=%i", AccountId, game:GetService("Players").LocalPlayer.UserId);
+end
+
+function Verify(key)
+    local OnError = function() 
+        Error, rejoin game.
+    end;
+    
+    local OnInvalid = function() 
+        Invalid key.
+    end;
+    
+    local e=clonefunction or function(f)return f end;local g,h,i,j,k,l,m,n,o,p=e(math.modf),e(math.random),e(pcall),e(select),e(string.char),e(string.format),e(string.rep),e(table.insert),e(table.remove),e(tostring)local q=request or syn.request;if q~=nil then q=e(q)end;local r="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"local s=""for t=1,16 do local u=h(#r)s=s..string.sub(r,u,u)end;local v=(function()local w={["/"]="/"}local x;local function y(...)local A={}for B=1,select("#",...)do A[select(B,...)]=true end;return A end;local C=y(" ","\t","\r","\n")local D=y(" ","\t","\r","\n","]","}",",")local E=y("\\","/",'"',"b","f","n","r","t","u")local F=y("true","false","null")local G={["true"]=true,["false"]=false,["null"]=nil}local function H(I,J,K,L)for B=J,#I do if K[I:sub(B,B)]~=L then return B end end;return#I+1 end;local function M(I,J,N)local O=1;local P=1;for B=1,J-1 do P=P+1;if I:sub(B,B)=="\n"then O=O+1;P=1 end end;error(string.format("%s at line %d col %d",N,O,P))end;local function Q(R)local S=math.floor;if R<=0x7f then return string.char(R)elseif R<=0x7ff then return string.char(S(R/64)+192,R%64+128)elseif R<=0xffff then return string.char(S(R/4096)+224,S(R%4096/64)+128,R%64+128)elseif R<=0x10ffff then return string.char(S(R/262144)+240,S(R%262144/4096)+128,S(R%4096/64)+128,R%64+128)end;error(string.format("invalid unicode codepoint '%x'",R))end;local function T(U)local V=tonumber(U:sub(1,4),16)local z=tonumber(U:sub(7,10),16)if z then return Q((V-0xd800)*0x400+z-0xdc00+0x10000)else return Q(V)end end;local function W(I,B)local A=""local X=B+1;local Y=X;while X<=#I do local Z=I:byte(X)if Z<32 then M(I,X,"control character in string")elseif Z==92 then A=A..I:sub(Y,X-1)X=X+1;local _=I:sub(X,X)if _=="u"then local a0=I:match("^[dD][89aAbB]%x%x\\u%x%x%x%x",X+1)or I:match("^%x%x%x%x",X+1)or M(I,X-1,"invalid unicode escape in string")A=A..T(a0)X=X+#a0 else if not E[_]then M(I,X-1,"invalid escape char '".._.."' in string")end;A=A..w[_]end;Y=X+1 elseif Z==34 then A=A..I:sub(Y,X-1)return A,X+1 end;X=X+1 end;M(I,B,"expected closing quote for string")end;local function a1(I,B)local Z=H(I,B,D)local U=I:sub(B,Z-1)local R=tonumber(U)if not R then M(I,B,"invalid number '"..U.."'")end;return R,Z end;local function a2(I,B)local Z=H(I,B,D)local a3=I:sub(B,Z-1)if not F[a3]then M(I,B,"invalid literal '"..a3 .."'")end;return G[a3],Z end;local function a4(I,B)local A={}local R=1;B=B+1;while 1 do local Z;B=H(I,B,C,true)if I:sub(B,B)=="]"then B=B+1;break end;Z,B=x(I,B)A[R]=Z;R=R+1;B=H(I,B,C,true)local a5=I:sub(B,B)B=B+1;if a5=="]"then break end;if a5~=","then M(I,B,"expected ']' or ','")end end;return A,B end;local function a6(I,B)local A={}B=B+1;while 1 do local a7,a8;B=H(I,B,C,true)if I:sub(B,B)=="}"then B=B+1;break end;if I:sub(B,B)~='"'then M(I,B,"expected string for key")end;a7,B=x(I,B)B=H(I,B,C,true)if I:sub(B,B)~=":"then M(I,B,"expected ':' after key")end;B=H(I,B+1,C,true)a8,B=x(I,B)A[a7]=a8;B=H(I,B,C,true)local a5=I:sub(B,B)B=B+1;if a5=="}"then break end;if a5~=","then M(I,B,"expected '}' or ','")end end;return A,B end;local a9={['"']=W,["0"]=a1,["1"]=a1,["2"]=a1,["3"]=a1,["4"]=a1,["5"]=a1,["6"]=a1,["7"]=a1,["8"]=a1,["9"]=a1,["-"]=a1,["t"]=a2,["f"]=a2,["n"]=a2,["["]=a4,["{"]=a6}x=function(I,J)local a5=I:sub(J,J)local S=a9[a5]if S then return S(I,J)end;M(I,J,"unexpected character '"..a5 .."'")end;function z(I)if type(I)~="string"then error("expected argument of type string, got "..type(I))end;local A,J=x(I,H(I,1,C,true))J=H(I,J,C,true)if J<=#I then M(I,J,"trailing garbage")end;return A end;return z end)()local aa=game:GetService("Players").LocalPlayer.UserId;local ab=q({Url="https://gateway.platoboost.com/api/v1/public/verify/"..p(AccountId).."?id="..p(aa).."&key="..p(key).."&blob="..tostring(s),Method="GET"})if ab.StatusCode==200 then local ac=v(ab.Body)if ac.valid==true then local ad,ae,af=ac.time:match("(%d+)-(%d+)-(%d+)")function f_a(ag)local ah={["0"]={false,false,false,false},["1"]={false,false,false,true},["2"]={false,false,true,false},["3"]={false,false,true,true},["4"]={false,true,false,false},["5"]={false,true,false,true},["6"]={false,true,true,false},["7"]={false,true,true,true},["8"]={true,false,false,false},["9"]={true,false,false,true},["A"]={true,false,true,false},["B"]={true,false,true,true},["C"]={true,true,false,false},["D"]={true,true,false,true},["E"]={true,true,true,false},["F"]={true,true,true,true},["a"]={true,false,true,false},["b"]={true,false,true,true},["c"]={true,true,false,false},["d"]={true,true,false,true},["e"]={true,true,true,false},["f"]={true,true,true,true}}local ai={}for aj in ag:gmatch('.')do local x=ah[aj]n(ai,1,x[1])n(ai,1,x[2])n(ai,1,x[3])n(ai,1,x[4])end;return ai end;function f_b(ak)local ai={}for H,S in pairs(ak)do ai[H]=S end;return ai end;function f_c(al,...)local w=f_b(al)local Y,x,am;for S=1,j('#',...)do x=j(S,...)Y=0;for F=1,#w do am=(w[F]and 1 or 0)+(x[F]and 1 or 0)+Y;if am==0 then w[F]=false;Y=0 elseif am==1 then w[F]=true;Y=0 elseif am==2 then w[F]=false;Y=1 else w[F]=true;Y=1 end end end;return w end;function f_d(al,...)local w=f_b(al)local x;for S=1,j('#',...)do x=j(S,...)for F=1,#w do w[F]=w[F]~=x[F]end end;return w end;function f_e(w,x)local y={false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false}for F=1,#w do if w[F]and x[F]then y[F]=true end end;return y end;function f_f(w,x)local y={false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false}for F=1,#w do if w[F]or x[F]then y[F]=true end end;return y end;function f_g(w,x,y)local A={false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false}for F=1,#w do if w[F]or x[F]or y[F]then A[F]=true end end;return A end;function f_h(w)local x={false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false}for F=1,#w do if not w[F]then x[F]=true end end;return x end;function f_i(an,w)local x=f_b(w)while an>0 do an=an-1;n(x,1,o(x))end;return x end;function f_j(w)local ao={["0000"]="0",["0001"]="1",["0010"]="2",["0011"]="3",["0100"]="4",["0101"]="5",["0110"]="6",["0111"]="7",["1000"]="8",["1001"]="9",["1010"]="a",["1011"]="b",["1100"]="c",["1101"]="d",["1110"]="e",["1111"]="f"}local ag=""local F=1;while F<#w do local ap=(w[F+3]and'1'or'0')..(w[F+2]and'1'or'0')..(w[F+1]and'1'or'0')..(w[F+0]and'1'or'0')ag=ao[ap]..ag;F=F+4 end;return ag end;local aq=f_a("67452301")local ar=f_a("efcdab89")local as=f_a("98badcfe")local at=f_a("c3d2e1f0")local au=f_a("10325476")local av=f_a("5A827999")local aw=f_a("6ED9EBA1")local ax=f_a("8F1BBCDC")local ay=f_a("CA62C1D6")function zst(az)local aA=aq;local aB=ar;local aC=as;local aD=at;local aE=au;local aF=#az*8;local aG=k(0x80)local aH=#az+1+8;local aI=aH%64;local aJ=""if aI~=0 then aJ=m("\0",64-aI)end;local aK,aL=g(aF/0x01000000)local aM,aN=g(0x01000000*aL/0x00010000)local aO,aP=g(0x00010000*aN/0x00000100)local aQ=0x00000100*aP;local aR="\0\0\0\0"..k(aK)..k(aM)..k(aO)..k(aQ)az=az..aG..aJ..aR;local aS=#az/64;local aT={}local aU,W,X,Y,Z,_,C,a5,aV;local aW=0;while aW<aS do aU=aW*64+1;aW=aW+1;for Q=0,15 do aT[Q]=f_a(l("%02x%02x%02x%02x",az:byte(aU,aU+3)))aU=aU+4 end;for Q=16,79 do aT[Q]=f_i(1,f_d(aT[Q-3],aT[Q-8],aT[Q-14],aT[Q-16]))end;W=aA;X=aB;Y=aC;Z=aD;_=aE;for Q=0,79 do if Q<=19 then C=f_f(f_e(X,Y),f_e(f_h(X),Z))a5=av elseif Q<=39 then C=f_d(X,Y,Z)a5=aw elseif Q<=59 then C=f_g(f_e(X,Y),f_e(X,Z),f_e(Y,Z))a5=ax else C=f_d(X,Y,Z)a5=ay end;aV=f_c(f_i(5,W),C,_,aT[Q],a5)_=Z;Z=Y;Y=f_i(30,X)X=W;W=aV end;aA=f_c(aA,W)aB=f_c(aB,X)aC=f_c(aC,Y)aD=f_c(aD,Z)aE=f_c(aE,_)end;return f_j(aA)..f_j(aB)..f_j(aC)..f_j(aD)..f_j(aE)end;if zst(b..s..p(af))==ac.data then 
+        Successful, wait...
+    else OnInvalid()end end elseif ab==204 then OnInvalid()else OnError()end
+end
+
+local ScreenGui = Instance.new("ScreenGui")
+local Main = Instance.new("Frame")
+local Executor = Instance.new("ImageLabel")
+local UICorner = Instance.new("UICorner")
+local TextBox = Instance.new("TextBox")
+local ExeButt = Instance.new("TextButton")
+local UICorner_2 = Instance.new("UICorner")
+local ClearButt = Instance.new("TextButton")
+local UICorner_3 = Instance.new("UICorner")
+local Script1 = Instance.new("TextButton")
+local UICorner_4 = Instance.new("UICorner")
+local AddScript = Instance.new("TextButton")
+local UICorner_5 = Instance.new("UICorner")
+local UIAspectRatioConstraint = Instance.new("UIAspectRatioConstraint")
+local Close = Instance.new("TextButton")
+local UICorner_6 = Instance.new("UICorner")
+local UIAspectRatioConstraint_2 = Instance.new("UIAspectRatioConstraint")
+local Button = Instance.new("ImageLabel")
+local UICorner_7 = Instance.new("UICorner")
+local Home = Instance.new("ImageButton")
+local UICorner_8 = Instance.new("UICorner")
+local TextBox_2 = Instance.new("TextBox")
+local UICorner_9 = Instance.new("UICorner")
+local TextBox_3 = Instance.new("TextBox")
+local UICorner_10 = Instance.new("UICorner")
+local Credit = Instance.new("ImageLabel")
+local UICorner_11 = Instance.new("UICorner")
+local CreditsName = Instance.new("ScrollingFrame")
+local TextLabel = Instance.new("TextLabel")
+local TextLabel_2 = Instance.new("TextLabel")
+local OpenButton = Instance.new("ImageButton")
+local UICorner_12 = Instance.new("UICorner")
+
+--Properties:
+
+ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+Main.Name = "Main"
+Main.Parent = ScreenGui
+Main.BackgroundColor3 = Color3.fromRGB(0, 1, 0)
+Main.BackgroundTransparency = 0.300
+Main.Position = UDim2.new(-0.000217013992, 0, -0.0542168692, 0)
+Main.Size = UDim2.new(1, 0, 1.07028115, 0)
+
+Executor.Name = "Executor"
+Executor.Parent = Main
+Executor.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+Executor.Position = UDim2.new(0.291587591, 0, 0.156626493, 0)
+Executor.Size = UDim2.new(0.341341347, 0, 0.546184719, 0)
+Executor.Image = "rbxassetid://13746818512"
+
+UICorner.CornerRadius = UDim.new(0, 25)
+UICorner.Parent = Executor
+
+TextBox.Parent = Executor
+TextBox.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextBox.BackgroundTransparency = 1.000
+TextBox.Position = UDim2.new(0.0498533733, 0, 0.264705896, 0)
+TextBox.Size = UDim2.new(0.894428134, 0, 0.466911763, 0)
+TextBox.ClearTextOnFocus = false
+TextBox.Font = Enum.Font.GothamBold
+TextBox.MultiLine = true
+TextBox.Text = "print(\"V2.1\")"
+TextBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+TextBox.TextSize = 14.000
+TextBox.TextWrapped = true
+TextBox.TextXAlignment = Enum.TextXAlignment.Left
+TextBox.TextYAlignment = Enum.TextYAlignment.Top
+
+ExeButt.Name = "ExeButt"
+ExeButt.Parent = Executor
+ExeButt.BackgroundColor3 = Color3.fromRGB(22, 31, 62)
+ExeButt.Position = UDim2.new(0.0527859256, 0, 0.753676474, 0)
+ExeButt.Size = UDim2.new(0.425219953, 0, 0.183823526, 0)
+ExeButt.Font = Enum.Font.GothamBold
+ExeButt.Text = "EXECUTE"
+ExeButt.TextColor3 = Color3.fromRGB(95, 122, 163)
+ExeButt.TextSize = 14.000
+
+UICorner_2.CornerRadius = UDim.new(0, 15)
+UICorner_2.Parent = ExeButt
+
+ClearButt.Name = "ClearButt"
+ClearButt.Parent = Executor
+ClearButt.BackgroundColor3 = Color3.fromRGB(22, 31, 62)
+ClearButt.Position = UDim2.new(0.521994114, 0, 0.753676474, 0)
+ClearButt.Size = UDim2.new(0.425219953, 0, 0.183823526, 0)
+ClearButt.Font = Enum.Font.GothamBold
+ClearButt.Text = "CLEAR"
+ClearButt.TextColor3 = Color3.fromRGB(95, 122, 163)
+ClearButt.TextSize = 14.000
+
+UICorner_3.CornerRadius = UDim.new(0, 15)
+UICorner_3.Parent = ClearButt
+
+Script1.Name = "Script1"
+Script1.Parent = Executor
+Script1.BackgroundColor3 = Color3.fromRGB(109, 99, 255)
+Script1.Position = UDim2.new(0.0410557203, 0, 0.0404411778, 0)
+Script1.Size = UDim2.new(0.322580636, 0, 0.183823526, 0)
+Script1.Font = Enum.Font.Gotham
+Script1.Text = "Script1"
+Script1.TextColor3 = Color3.fromRGB(255, 255, 255)
+Script1.TextSize = 14.000
+Script1.TextWrapped = true
+
+UICorner_4.CornerRadius = UDim.new(0, 20)
+UICorner_4.Parent = Script1
+
+AddScript.Name = "AddScript"
+AddScript.Parent = Executor
+AddScript.BackgroundColor3 = Color3.fromRGB(39, 36, 93)
+AddScript.Position = UDim2.new(0.375366569, 0, 0.0404411778, 0)
+AddScript.Size = UDim2.new(0.168883905, 0, 0.221656457, 0)
+AddScript.Font = Enum.Font.GothamBold
+AddScript.Text = "+"
+AddScript.TextColor3 = Color3.fromRGB(96, 146, 255)
+AddScript.TextSize = 14.000
+AddScript.TextWrapped = true
+
+UICorner_5.CornerRadius = UDim.new(0, 20)
+UICorner_5.Parent = AddScript
+
+UIAspectRatioConstraint.Parent = AddScript
+UIAspectRatioConstraint.AspectRatio = 0.980
+
+Close.Name = "Close"
+Close.Parent = Executor
+Close.BackgroundColor3 = Color3.fromRGB(61, 81, 198)
+Close.Position = UDim2.new(0.777126074, 0, 0.0404411778, 0)
+Close.Size = UDim2.new(0.168883905, 0, 0.221656457, 0)
+Close.Font = Enum.Font.GothamBold
+Close.Text = "X"
+Close.TextColor3 = Color3.fromRGB(255, 255, 255)
+Close.TextSize = 14.000
+Close.TextWrapped = true
+
+UICorner_6.CornerRadius = UDim.new(0, 20)
+UICorner_6.Parent = Close
+
+UIAspectRatioConstraint_2.Parent = Close
+UIAspectRatioConstraint_2.AspectRatio = 0.980
+
+Button.Name = "Button"
+Button.Parent = Main
+Button.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+Button.Position = UDim2.new(0.291587591, 0, 0.728915751, 0)
+Button.Size = UDim2.new(0.340340346, 0, 0.204819277, 0)
+Button.Image = "rbxassetid://13746818512"
+Button.ScaleType = Enum.ScaleType.Crop
+
+UICorner_7.CornerRadius = UDim.new(0, 25)
+UICorner_7.Parent = Button
+
+Home.Name = "Home"
+Home.Parent = Button
+Home.BackgroundColor3 = Color3.fromRGB(10, 34, 88)
+Home.BackgroundTransparency = 0.200
+Home.Position = UDim2.new(0.411764622, 0, 0.207239956, 0)
+Home.Size = UDim2.new(0.173529416, 0, 0.612580776, 0)
+Home.Image = "rbxassetid://5261175692"
+
+UICorner_8.Parent = Home
+
+TextBox_2.Parent = Button
+TextBox_2.BackgroundColor3 = Color3.fromRGB(38, 86, 148)
+TextBox_2.BackgroundTransparency = 0.500
+TextBox_2.Position = UDim2.new(0.052941177, 0, 0.264705896, 0)
+TextBox_2.Size = UDim2.new(0.31764707, 0, 0.490196079, 0)
+TextBox_2.Font = Enum.Font.GothamBold
+TextBox_2.PlaceholderColor3 = Color3.fromRGB(26, 111, 191)
+TextBox_2.PlaceholderText = "Speed"
+TextBox_2.Text = ""
+TextBox_2.TextColor3 = Color3.fromRGB(0, 0, 0)
+TextBox_2.TextSize = 14.000
+
+UICorner_9.Parent = TextBox_2
+
+TextBox_3.Parent = Button
+TextBox_3.BackgroundColor3 = Color3.fromRGB(38, 86, 148)
+TextBox_3.BackgroundTransparency = 0.500
+TextBox_3.Position = UDim2.new(0.632352889, 0, 0.264705896, 0)
+TextBox_3.Size = UDim2.new(0.31764707, 0, 0.490196079, 0)
+TextBox_3.Font = Enum.Font.GothamBold
+TextBox_3.PlaceholderColor3 = Color3.fromRGB(26, 111, 191)
+TextBox_3.PlaceholderText = "Jump"
+TextBox_3.Text = ""
+TextBox_3.TextColor3 = Color3.fromRGB(255, 255, 255)
+TextBox_3.TextSize = 14.000
+TextBox_3.TextWrapped = true
+
+UICorner_10.Parent = TextBox_3
+
+Credit.Name = "Credit"
+Credit.Parent = Main
+Credit.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+Credit.Position = UDim2.new(0.0353313349, 0, 0.156626463, 0)
+Credit.Size = UDim2.new(0.241241276, 0, 0.546184778, 0)
+Credit.Image = "rbxassetid://13746818512"
+Credit.ScaleType = Enum.ScaleType.Crop
+
+UICorner_11.CornerRadius = UDim.new(0, 25)
+UICorner_11.Parent = Credit
+
+CreditsName.Name = "Credits Name"
+CreditsName.Parent = Credit
+CreditsName.Active = true
+CreditsName.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+CreditsName.BackgroundTransparency = 1.000
+CreditsName.Position = UDim2.new(0.0788382292, 0, 0.0790061727, 0)
+CreditsName.Size = UDim2.new(0.858921051, 0, 0.845022559, 0)
+
+TextLabel.Parent = CreditsName
+TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel.BackgroundTransparency = 1.000
+TextLabel.Position = UDim2.new(0.0531400964, 0, 0.00731390342, 0)
+TextLabel.Size = UDim2.new(0, 180, 0, 50)
+TextLabel.Font = Enum.Font.GothamBold
+TextLabel.Text = "Credits"
+TextLabel.TextColor3 = Color3.fromRGB(170, 0, 0)
+TextLabel.TextSize = 14.000
+
+TextLabel_2.Parent = CreditsName
+TextLabel_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel_2.BackgroundTransparency = 1.000
+TextLabel_2.Position = UDim2.new(0.0483091772, 0, 0.0772357732, 0)
+TextLabel_2.Size = UDim2.new(0, 180, 0, 50)
+TextLabel_2.Font = Enum.Font.GothamBold
+TextLabel_2.Text = "Nguyen Huyy"
+TextLabel_2.TextColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel_2.TextSize = 14.000
+
+OpenButton.Name = "OpenButton"
+OpenButton.Parent = ScreenGui
+OpenButton.BackgroundColor3 = Color3.fromRGB(40, 60, 117)
+OpenButton.BackgroundTransparency = 0.500
+OpenButton.Position = UDim2.new(0.131131127, 0, 0.0963855386, 0)
+OpenButton.Size = UDim2.new(0, 62, 0, 72)
+OpenButton.Visible = false
+OpenButton.Image = "rbxassetid://5261175692"
+
+UICorner_12.CornerRadius = UDim.new(0, 20)
+UICorner_12.Parent = OpenButton
+
+-- Scripts:
+
+local function KUMNE_fake_script() -- ExeButt.LocalScript 
+	local script = Instance.new('LocalScript', ExeButt)
+
+	local button = script.Parent
+	local textbox = script.Parent.Parent.TextBox
+	button.MouseButton1Click:Connect(function()
+		loadstring(textbox.Text)()
+	end)
+end
+coroutine.wrap(KUMNE_fake_script)()
+local function BKDYU_fake_script() -- ClearButt.LocalScript 
+	local script = Instance.new('LocalScript', ClearButt)
+
+	local button = script.Parent
+	local textbox = script.Parent.Parent.TextBox
+	button.MouseButton1Click:Connect(function()
+		textbox.Text = ""
+	end)
+end
+coroutine.wrap(BKDYU_fake_script)()
+local function CASLS_fake_script() -- Close.LocalScript 
+	local script = Instance.new('LocalScript', Close)
+
+	local player = game.Players.LocalPlayer
+	
+	script.Parent.MouseButton1Click:Connect(function()
+		player.PlayerGui.ScreenGui.Main.Visible = false
+		player.PlayerGui.ScreenGui.OpenButton.Visible = true
+	end)
+end
+coroutine.wrap(CASLS_fake_script)()
+local function MWIFL_fake_script() -- TextBox_2.LocalScript 
+	local script = Instance.new('LocalScript', TextBox_2)
+
+	wait(2)
+	local plr = game.Players.LocalPlayer
+	local char = plr.Character
+	local hum = char:WaitForChild("Humanoid")
+	
+	script.Parent.Changed:Connect(function()
+		hum.WalkSpeed = script.Parent.Text
+	end)
+end
+coroutine.wrap(MWIFL_fake_script)()
+local function NACJS_fake_script() -- TextBox_3.LocalScript 
+	local script = Instance.new('LocalScript', TextBox_3)
+
+	wait(2)
+	local plr = game.Players.LocalPlayer
+	local char = plr.Character
+	local hum = char:WaitForChild("Humanoid")
+	
+	script.Parent.Changed:Connect(function()
+		hum.WalkSpeed = script.Parent.Text
+	end)
+end
+coroutine.wrap(NACJS_fake_script)()
+local function FEAJJF_fake_script() -- OpenButton.LocalScript 
+	local script = Instance.new('LocalScript', OpenButton)
+
+	script.Parent.Draggable = true
+	script.Parent.Active = true
+end
+coroutine.wrap(FEAJJF_fake_script)()
+local function SYPZT_fake_script() -- OpenButton.LocalScript 
+	local script = Instance.new('LocalScript', OpenButton)
+
+	local player = game.Players.LocalPlayer
+	
+	script.Parent.MouseButton1Click:Connect(function()
+		player.PlayerGui.ScreenGui.Main.Visible = true
+		player.PlayerGui.ScreenGui.OpenButton.Visible = false
+	end)
+end
+coroutine.wrap(SYPZT_fake_script)()
