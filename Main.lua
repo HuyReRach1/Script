@@ -97,7 +97,7 @@ SubmitButton.MouseButton1Click:Connect(function()
     if KeySystem == "KEY_c23943g2" then   
 screenGui:Destroy()
 
-loadstring(game:HttpGet("https://raw.githubusercontent.com/NgHuyZzZ/nghuyzzz.github.io/main/scripts/NgHuyHub.lua"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/HuyReRach1/NgHuyHub/main/NgHuyHub.lua"))()
   
   end
 end)
