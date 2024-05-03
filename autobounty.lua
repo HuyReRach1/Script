@@ -62,7 +62,7 @@ _G.deb = {}
         World2 = true
     elseif game.PlaceId == 7449423635 then
         World3 = true
-    else game.Players.LocalPlayer:Kick("[Sera] // Wrong game, Auto Join BF in 10s, leave if you want!") 
+    else game.Players.LocalPlayer:Kick("[NgHuy Hub] // Sai game rồi, Tự động vào Blox Fruits trong 10s, thoát nếu bạn muốn!") 
       wait(10) 
       game:GetService"TeleportService":Teleport(game.PlaceId)
     end 
@@ -118,13 +118,13 @@ elseif World1 then
   end
 ------------ function
 u5 = require(game.ReplicatedStorage:WaitForChild("Notification"))
-u5.new("<Color=Yellow>Sera Hub Auto Bounty<Color=/>"):Display()
+u5.new("<Color=Yellow>NgHuy Hub Auto Bounty<Color=/>"):Display()
 wait()
-u5.new("<Color=Yellow>This Is The Beta Version So Can Have Bug<Color=/>"):Display() 
+u5.new("<Color=Yellow>Đây là bản Beta<Color=/>"):Display() 
 wait()
-u5.new("<Color=Yellow>If Have Bug/Error/Ideas, Please Report At We Discord<Color=/>"):Display() 
+u5.new("<Color=Yellow>Nếu có Bug/Lỗi/Ý Tưởng, Liên hệ chúng tôi ở Discord<Color=/>"):Display() 
 wait()
-u5.new("<Color=Yellow>bit.ly/serahub<Color=/>"):Display()     
+u5.new("<Color=Yellow>dsc.gg/nghuy-hub<Color=/>"):Display()     
 -- ui
 ocal HubName = "NgHuy Hub"
 local LogoImage = "http://www.roblox.com/asset/?id=16500646890"
@@ -555,7 +555,7 @@ function wHop()
                     ["icon_url"] =  "https://static.wikia.nocookie.net/2840931c-afb4-482b-a364-18b968adac58",
                 },
                 ["color"] = 16228095,
-                ["title"] = "Sera Community - Bounty Hunt", 
+                ["title"] = "NgHuy Hub - Blox Fruits", 
                 ["description"] = "Server Hopping...",
                 ["thumbnail"] = {
                     ["url"] = "https://cdn.discordapp.com/attachments/937563909236326400/1124332695581888522/Untitled23_20230628115032.png",
@@ -564,7 +564,7 @@ function wHop()
                     ["url"] = getgenv().c.Webhooks.Hop or "https://cdn.popsww.com/blog/sites/2/2022/09/shinobu-la-ai.jpg",
                 },
                 ["footer"] = {
-                    ["text"] = "Sera Community - discord.gg/sera",
+                    ["text"] = "NgHuy Hub Community- dsc.gg/nghuy-hub",
                 },
                 ["timestamp"] = os.date("!%Y-%m-%dT%H:%M:%SZ"),
             }
@@ -578,7 +578,7 @@ function wRecv()
     ["content"] = "",
     ["embeds"] = {
         {
-            ["title"] = "Sera Community Bounty Hunt",
+            ["title"] = "NgHuy Hub Auto Bounty",
             ["color"] = 16228095,
             ["author"] = {
                 ["name"] = game.Players.LocalPlayer.Name,
@@ -597,7 +597,7 @@ function wRecv()
                 }
             },
             ["footer"] = {
-                ["text"] = "Sera Community - discord.gg/sera",
+                ["text"] = "NgHuy Hub Community - dsc.gg/nghuy-hub",
             },
             ["image"] = {
                 ["url"] = getgenv().c.Webhooks.StartScript or "https://cdn.popsww.com/blog/sites/2/2022/02/demon-slayer-nezuko.jpg",
@@ -627,7 +627,7 @@ function wEarn(targ, earn)
                     ["name"] = game.Players.LocalPlayer.Name,
                     ["icon_url"] =  "https://static.wikia.nocookie.net/2840931c-afb4-482b-a364-18b968adac58",
                 },
-                ["title"] = "Sera Community Bounty Hunt",
+                ["title"] = "NgHuy Hub Auto Bounty",
                 ["color"] = 16228095,
                 ["fields"] = {
                     {
@@ -658,7 +658,7 @@ function wEarn(targ, earn)
                     ["url"] = getgenv().c.Webhooks.KillTarg or "https://cdn.popsww.com/blog/sites/2/2023/04/Yoriichi-Tsugikuni.jpg",
                 },
                 ["footer"] = {
-                    ["text"] = "Sera Community - discord.gg/sera",
+                    ["text"] = "NgHuy Hub Community - dsc.gg/nghuy-hub",
                 },
                 ["timestamp"] = os.date("!%Y-%m-%dT%H:%M:%SZ"),
             }
